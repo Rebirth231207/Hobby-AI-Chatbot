@@ -1,5 +1,9 @@
-/* بارگذاری فونت زیبای وزیر متن */
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap');
+/* توجه: فونت وزیر متن با wp_enqueue_style در class-ss-public.php به صورت
+   غیرمسدودکننده (non-blocking) بارگذاری می‌شود. استفاده مجدد از @import در
+   اینجا حذف شده چون @import در CSS یک درخواست شبکه‌ی render-blocking است
+   که می‌تواند در صورت کندی یا عدم دسترسی به fonts.googleapis.com باعث
+   معطل ماندن رندر کل صفحه (و به‌تبع آن غیرقابل استفاده شدن اسکرول تا
+   پایان timeout) شود. */
 
 /* متغیرهای رنگی برای مدیریت دارک‌مود و لایت‌مود */
 :root {
@@ -72,18 +76,27 @@
   50% { transform: translateY(-4px); }
 }
 
-/* استایل‌های پایه */
-* {
+/* استایل‌های پایه - محدود به داخل ویجت پشتیبانی (اسکوپ‌شده با #support-widget)
+   تا با استایل قالب اصلی سایت وردپرس یا سایر افزونه‌ها تداخل ایجاد نکند */
+#support-widget,
+#support-widget * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-body {
-  margin: 0;
+#support-widget {
   font-family: 'Vazirmatn', sans-serif;
-  overflow: hidden;
-  direction: rlt;
+  direction: rtl;
+}
+
+/* محافظ صریح: تضمین می‌کند اسکرول عمودی صفحه اصلی سایت وردپرس تحت هیچ
+   شرایطی توسط این افزونه (یا تداخل احتمالی با آن) قفل نشود. این افزونه
+   هرگز عمداً overflow صفحه اصلی را دست‌کاری نمی‌کند؛ این قانون صرفاً یک
+   تضمین صریح در برابر هرگونه override ناخواسته است. */
+html,
+body {
+  overflow-y: auto !important;
 }
 
 .hidden {

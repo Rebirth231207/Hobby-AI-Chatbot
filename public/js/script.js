@@ -10,6 +10,31 @@
  * جاوااسکریپت کاملاً خالص (Vanilla JS) بدون هیچ وابستگی به فریمورک.
  */
 
+/* =========================================================================
+ * محافظ اسکرول صفحه اصلی سایت
+ * ========================================================================= */
+
+/**
+ * این تابع تضمین می‌کند که اسکرول صفحه اصلی سایت وردپرس هرگز توسط این
+ * افزونه قفل نشود. این افزونه هرگز عمداً overflow صفحه را دست‌کاری
+ * نمی‌کند؛ این تابع صرفاً یک محافظ فعال است که هرگونه مقدار inline
+ * style روی document.body که ممکن است توسط اسکریپت دیگری به اشتباه
+ * تنظیم شده باشد را در صورت وجود پاک می‌کند.
+ *
+ * @return {void}
+ */
+function ssEnsurePageScrollable() {
+	if (document.body.style.overflow === 'hidden') {
+		document.body.style.overflow = '';
+	}
+	if (document.documentElement.style.overflow === 'hidden') {
+		document.documentElement.style.overflow = '';
+	}
+}
+
+ssEnsurePageScrollable();
+document.addEventListener('DOMContentLoaded', ssEnsurePageScrollable);
+
 // وضعیت‌های کلی ابزار چت
 var state = {
 	isOpen: false,
